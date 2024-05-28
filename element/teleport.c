@@ -14,6 +14,7 @@ Elements *New_Teleport(int label)
     pDerivedObj->x = WIDTH - pDerivedObj->width;
     pDerivedObj->y = HEIGHT - pDerivedObj->height;
     pDerivedObj->activate = false;
+    
     // setting the interact object
     pObj->inter_obj[pObj->inter_len++] = Character_L;
     // setting derived object function
@@ -46,7 +47,9 @@ void Teleport_interact(Elements *self, Elements *tar)
             chara->x <= Obj->x + Obj->width &&
             Obj->activate)
         {
+            window = window+1;
             _Character_update_position(tar, 0 - chara->x, 0);
+            create_scene(GameScene_L);
         }
     }
 }
