@@ -1,18 +1,24 @@
 #include <allegro5/allegro_primitives.h>
 #include "menu.h"
 #include <stdbool.h>
+#include "scene/sceneManager.h"
 /*
    [Menu function]
 */
 Scene *New_Menu(int label)
 {
     Menu *pDerivedObj = (Menu *)malloc(sizeof(Menu));
-    pDerivedObj->background = al_load_bitmap("assets/image/bg3.png");
+    if(window2=0){
+        pDerivedObj->background = al_load_bitmap("assets/image/op.jpg");
+    }
+    else if(window2=1){
+        pDerivedObj->background = al_load_bitmap("assets/image/op.jpg");
+    }
     Scene *pObj = New_Scene(label);
     // setting derived object member
     pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 12, 0);
     // Load sound
-    pDerivedObj->song = al_load_sample("assets/sound/menu.mp3");
+    pDerivedObj->song = al_load_sample("assets/sound/bgm1.mp3");
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->song);
     pDerivedObj->title_x = WIDTH / 2;
@@ -32,10 +38,16 @@ Scene *New_Menu(int label)
 }
 void menu_update(Scene *self)
 {
+    if (key_state[ALLEGRO_KEY_SPACE])
+    {
+        window2++;
+        create_scene(Menu_L);
+    }
+    return;
     if (key_state[ALLEGRO_KEY_ENTER])
     {
         self->scene_end = true;
-        window = 1;
+        window=2;
     }
     return;
 }
@@ -43,7 +55,7 @@ void menu_draw(Scene *self)
 {
     Menu *Obj = ((Menu *)(self->pDerivedObj));
     al_draw_bitmap(Obj->background, 0, 0, 0);
-    al_draw_text(Obj->font, al_map_rgb(255, 255, 255), Obj->title_x, Obj->title_y, ALLEGRO_ALIGN_CENTRE, "Press 'Enter' to start");
+    //al_draw_text(Obj->font, al_map_rgb(255, 255, 255), Obj->title_x, Obj->title_y, ALLEGRO_ALIGN_CENTRE, "Press 'Enter' to start");
     //al_draw_rectangle(Obj->title_x - 150, Obj->title_y - 30, Obj->title_x + 150, Obj->title_y + 30, al_map_rgb(255, 255, 255), 0);
     al_play_sample_instance(Obj->sample_instance);
 }
