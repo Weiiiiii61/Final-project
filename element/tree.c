@@ -11,7 +11,7 @@ Elements *New_Tree(int label)
     pDerivedObj->img = al_load_bitmap("assets/image/tree.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
-    pDerivedObj->x = 20;
+    pDerivedObj->x = WIDTH - pDerivedObj->width;
     pDerivedObj->y = HEIGHT - pDerivedObj->height;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x + pDerivedObj->width / 3,
                                         pDerivedObj->y + pDerivedObj->height / 3,
