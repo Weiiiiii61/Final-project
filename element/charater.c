@@ -54,11 +54,7 @@ void Character_update(Elements *self)
     Character *chara = ((Character *)(self->pDerivedObj));
     if (chara->state == STOP)
     {
-        if (key_state[ALLEGRO_KEY_SPACE])
-        {
-            chara->state = ATK;
-        }
-        else if (key_state[ALLEGRO_KEY_A])
+        if (key_state[ALLEGRO_KEY_A])
         {
             chara->dir = false;
             chara->state = MOVE;
@@ -75,11 +71,7 @@ void Character_update(Elements *self)
     }
     else if (chara->state == MOVE)
     {
-        if (key_state[ALLEGRO_KEY_SPACE])
-        {
-            chara->state = ATK;
-        }
-        else if (key_state[ALLEGRO_KEY_A])
+        if (key_state[ALLEGRO_KEY_A])
         {
             chara->dir = false;
             _Character_update_position(self, -5, 0);
@@ -101,26 +93,6 @@ void Character_update(Elements *self)
             chara->state = STOP;
             chara->new_proj = false;
         }
-        if (chara->gif_status[ATK]->display_index == 2 && chara->new_proj == false)
-        {
-            Elements *pro;
-            if (chara->dir)
-            {
-                pro = New_Projectile(Projectile_L,
-                                     chara->x + chara->width - 100,
-                                     chara->y + 10,
-                                     5);
-            }
-            else
-            {
-                pro = New_Projectile(Projectile_L,
-                                     chara->x - 50,
-                                     chara->y + 10,
-                                     -5);
-            }
-            _Register_elements(scene, pro);
-            chara->new_proj = true;
-        }
     }
 }
 void Character_draw(Elements *self)
@@ -131,10 +103,6 @@ void Character_draw(Elements *self)
     if (frame)
     {
         al_draw_bitmap(frame, chara->x, chara->y, ((chara->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
-    }
-    if (chara->state == ATK && chara->gif_status[chara->state]->display_index == 2)
-    {
-        al_play_sample_instance(chara->atk_Sound);
     }
 }
 void Character_destory(Elements *self)
