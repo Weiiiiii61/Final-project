@@ -6,6 +6,7 @@ const double FPS = 60.0;
 const int WIDTH = 1250;
 const int HEIGHT = 500;
 int window = 0;
+int window2 = 0;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_EVENT event;
 ALLEGRO_TIMER *fps = NULL;

@@ -136,6 +136,19 @@ bool game_update(Game *self)
         default:
             break;
         }
+        switch (window2)
+        {
+        case 0:
+            create_scene(Menu_L);
+            break;
+        case 1:
+            create_scene(GameScene_L);
+            break;
+        case -1:
+            return false;
+        default:
+            break;
+        }
     }
     return true;
 }
