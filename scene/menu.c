@@ -1,22 +1,26 @@
 #include <allegro5/allegro_primitives.h>
 #include "menu.h"
 #include <stdbool.h>
-#include "scene/sceneManager.h"
+#include "sceneManager.h"
 /*
    [Menu function]
 */
 Scene *New_Menu(int label)
 {
     Menu *pDerivedObj = (Menu *)malloc(sizeof(Menu));
-    if(window2=0){
+    if(window2==0){
         pDerivedObj->background = al_load_bitmap("assets/image/op.jpg");
     }
-    else if(window2=1){
-        pDerivedObj->background = al_load_bitmap("assets/image/op.jpg");
+    else if(window2==1){
+        pDerivedObj->background = al_load_bitmap("assets/image/op1.jpg");
     }
+    else if(window2==2){
+        pDerivedObj->background = al_load_bitmap("assets/image/op2.jpg");
+    }
+
     Scene *pObj = New_Scene(label);
     // setting derived object member
-    pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 12, 0);
+    //pDerivedObj->font = al_load_ttf_font("assets/font/pirulen.ttf", 12, 0);
     // Load sound
     pDerivedObj->song = al_load_sample("assets/sound/bgm1.mp3");
     al_reserve_samples(20);
@@ -24,7 +28,7 @@ Scene *New_Menu(int label)
     pDerivedObj->title_x = WIDTH / 2;
     pDerivedObj->title_y = HEIGHT / 2;
     // Loop the song until the display closes
-    al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
+    (pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
     al_restore_default_mixer();
     al_attach_sample_instance_to_mixer(pDerivedObj->sample_instance, al_get_default_mixer());
     // set the volume of instance
@@ -37,17 +41,29 @@ Scene *New_Menu(int label)
     return pObj;
 }
 void menu_update(Scene *self)
-{
-    if (key_state[ALLEGRO_KEY_SPACE])
-    {
-        window2++;
-        create_scene(Menu_L);
-    }
-    return;
-    if (key_state[ALLEGRO_KEY_ENTER])
-    {
-        self->scene_end = true;
-        window=2;
+{  
+    if(window2%2){
+        if (key_state[ALLEGRO_KEY_ENTER])
+        {
+            self->scene_end = true;
+            window=1;
+        }
+        else if (key_state[ALLEGRO_KEY_N])
+        {
+            window2++;
+            create_scene(Menu_L);
+        }
+    }else{
+        if (key_state[ALLEGRO_KEY_ENTER])
+        {
+            self->scene_end = true;
+            window=1;
+        }
+        else if (key_state[ALLEGRO_KEY_SPACE])
+        {
+            window2++;
+            create_scene(Menu_L);
+        }
     }
     return;
 }
@@ -62,7 +78,7 @@ void menu_draw(Scene *self)
 void menu_destroy(Scene *self)
 {
     Menu *Obj = ((Menu *)(self->pDerivedObj));
-    al_destroy_font(Obj->font);
+    //al_destroy_font(Obj->font);
     al_destroy_sample(Obj->song);
     al_destroy_sample_instance(Obj->sample_instance);
     free(Obj);
