@@ -83,7 +83,7 @@ void Character2_update(Elements *self)
             pro = New_Projectile(Projectile_L,
                                 chara->x - 50,
                                 chara->y + 10,
-                                -10);
+                                -5);
             _Register_elements(scene, pro);
             chara->new_proj = true;
         }
@@ -91,7 +91,7 @@ void Character2_update(Elements *self)
             pro = New_Projectile(Projectile_L,
                         chara->x - 50,
                         chara->y + 60,
-                        -5);                         
+                        -10);                         
             _Register_elements(scene, pro);
             chara->new_proj = true;
         }
