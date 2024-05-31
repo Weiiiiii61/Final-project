@@ -4,6 +4,7 @@
 #include "../shapes/Rectangle.h"
 #include "../algif5/src/algif.h"
 #include <stdio.h>
+//#include <Windows.h>
 #include <stdbool.h>
 /*
    [Character function]
@@ -52,11 +53,21 @@ void Character_update(Elements *self)
 {
     // use the idea of finite state machine to deal with different state
     Character *chara = ((Character *)(self->pDerivedObj));
+    if(a==0){
     if (chara->state == STOP)
     {
         if (key_state[ALLEGRO_KEY_A])
         {
             chara->dir = true;
+            chara->state = MOVE;
+        }
+        if (key_state[ALLEGRO_KEY_SPACE])
+        {
+            chara->state = MOVE;
+            a=1;
+        }
+        if(chara->y<=310){
+            _Character_update_position(self, 0, 10);
             chara->state = MOVE;
         }
         else if (key_state[ALLEGRO_KEY_D])
@@ -68,6 +79,7 @@ void Character_update(Elements *self)
         {
             chara->state = STOP;
         }
+
     }
     else if (chara->state == MOVE)
     {
@@ -77,7 +89,16 @@ void Character_update(Elements *self)
             _Character_update_position(self, -5, 0);
             chara->state = MOVE;
         }
-        else if (key_state[ALLEGRO_KEY_D])
+        else if (prev_key_state[ALLEGRO_KEY_SPACE]==0&&key_state[ALLEGRO_KEY_SPACE]==1)
+        {
+            a=1;
+            key_state[ALLEGRO_KEY_SPACE]=prev_key_state[ALLEGRO_KEY_SPACE];
+        }
+        if(chara->y<=310){
+            _Character_update_position(self, 0, 10);
+            chara->state = MOVE;
+        }
+        if (key_state[ALLEGRO_KEY_D])
         {
             chara->dir = false;
             _Character_update_position(self, 5, 0);
@@ -86,14 +107,18 @@ void Character_update(Elements *self)
         if (chara->gif_status[chara->state]->done)
             chara->state = STOP;
     }
-    else if (chara->state == ATK)
-    {
-        if (chara->gif_status[chara->state]->done)
-        {
-            chara->state = STOP;
-            chara->new_proj = false;
+    }
+    if(a==1){
+        if(chara->y>150){
+            _Character_update_position(self, 0, -10);
+            chara->state = ATK;
+        }
+        else{
+            a=0;
+            chara->state = MOVE;
         }
     }
+    
 }
 void Character_draw(Elements *self)
 {
