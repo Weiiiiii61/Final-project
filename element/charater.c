@@ -67,7 +67,7 @@ void Character_update(Elements *self)
             a=1;
         }
         if(chara->y<=310){
-            _Character_update_position(self, 0, 10);
+            _Character_update_position(self, 0, 7);
             chara->state = MOVE;
         }
         else if (key_state[ALLEGRO_KEY_D])
@@ -95,7 +95,7 @@ void Character_update(Elements *self)
             key_state[ALLEGRO_KEY_SPACE]=prev_key_state[ALLEGRO_KEY_SPACE];
         }
         if(chara->y<=310){
-            _Character_update_position(self, 0, 10);
+            _Character_update_position(self, 0, 7);
             chara->state = MOVE;
         }
         if (key_state[ALLEGRO_KEY_D])
@@ -109,8 +109,8 @@ void Character_update(Elements *self)
     }
     }
     if(a==1){
-        if(chara->y>150){
-            _Character_update_position(self, 0, -10);
+        if(chara->y>130){
+            _Character_update_position(self, 0, -7);
             chara->state = ATK;
         }
         else{
