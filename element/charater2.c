@@ -12,6 +12,7 @@ Elements *New_Character2(int label)
 {
     Character2 *pDerivedObj = (Character2 *)malloc(sizeof(Character2));
     Elements *pObj = New_Elements(label);
+    delay=100;
     // setting derived object member
     // load character images
     char state_string[3][10] = {"stop", "move", "attack"};
@@ -36,7 +37,7 @@ Elements *New_Character2(int label)
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width,
                                         pDerivedObj->y + pDerivedObj->height);
-    pDerivedObj->dir = false; // true: face to right, false: face to left
+    pDerivedObj->dir = true; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = STOP2;
     pDerivedObj->new_proj = false;
@@ -50,9 +51,10 @@ Elements *New_Character2(int label)
 }
 void Character2_update(Elements *self)
 {
+
     // use the idea of finite state machine to deal with different state
     Character2 *chara = ((Character2 *)(self->pDerivedObj));
-    if (chara->state == STOP2)
+    /*if (chara->state == STOP2)
     {
         if (key_state[ALLEGRO_KEY_SPACE])
         {
@@ -74,26 +76,28 @@ void Character2_update(Elements *self)
             chara->new_proj = false;
         }
         if (chara->gif_status[ATK2]->display_index == 2 && chara->new_proj == false)
-        {
-            Elements *pro;
-            if (chara->dir)
-            {
-                pro = New_Projectile(Projectile_L,
-                                     chara->x + chara->width - 100,
-                                     chara->y + 10,
-                                     5);
-            }
-            else
-            {
-                pro = New_Projectile(Projectile_L,
-                                     chara->x - 50,
-                                     chara->y + 10,
-                                     -5);
-            }
+        {*/
+            
+        Elements *pro;
+        if(delay==100){
+            pro = New_Projectile(Projectile_L,
+                                chara->x - 50,
+                                chara->y + 10,
+                                -10);
             _Register_elements(scene, pro);
             chara->new_proj = true;
         }
-    }
+        if(delay==0){
+            pro = New_Projectile(Projectile_L,
+                        chara->x - 50,
+                        chara->y + 60,
+                        -5);                         
+            _Register_elements(scene, pro);
+            chara->new_proj = true;
+        }
+        delay--;
+        //}
+    //}
 }
 void Character2_draw(Elements *self)
 {
