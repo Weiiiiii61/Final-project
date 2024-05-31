@@ -56,12 +56,12 @@ void Character_update(Elements *self)
     {
         if (key_state[ALLEGRO_KEY_A])
         {
-            chara->dir = false;
+            chara->dir = true;
             chara->state = MOVE;
         }
         else if (key_state[ALLEGRO_KEY_D])
         {
-            chara->dir = true;
+            chara->dir = false;
             chara->state = MOVE;
         }
         else
@@ -73,13 +73,13 @@ void Character_update(Elements *self)
     {
         if (key_state[ALLEGRO_KEY_A])
         {
-            chara->dir = false;
+            chara->dir = true;
             _Character_update_position(self, -5, 0);
             chara->state = MOVE;
         }
         else if (key_state[ALLEGRO_KEY_D])
         {
-            chara->dir = true;
+            chara->dir = false;
             _Character_update_position(self, 5, 0);
             chara->state = MOVE;
         }
