@@ -12,10 +12,19 @@ Scene *New_Menu(int label)
         pDerivedObj->background = al_load_bitmap("assets/image/op.jpg");
     }
     else if(window2==1){
-        pDerivedObj->background = al_load_bitmap("assets/image/op1.jpg");
+        pDerivedObj->background = al_load_bitmap("assets/image/menu.jpg");
     }
     else if(window2==2){
+        pDerivedObj->background = al_load_bitmap("assets/image/op1.jpg");
+    }
+    else if(window2==3){
         pDerivedObj->background = al_load_bitmap("assets/image/op2.jpg");
+    }
+    else if(window2==4){
+        pDerivedObj->background = al_load_bitmap("assets/image/op3.jpg");
+    }
+    else if(window2==5){
+        pDerivedObj->background = al_load_bitmap("assets/image/op4.jpg");
     }
 
     Scene *pObj = New_Scene(label);
@@ -42,29 +51,66 @@ Scene *New_Menu(int label)
 }
 void menu_update(Scene *self)
 {  
-    if(window2%2){
-        if (key_state[ALLEGRO_KEY_ENTER])
-        {
-            self->scene_end = true;
-            window=1;
-        }
-        else if (key_state[ALLEGRO_KEY_N])
-        {
-            window2++;
-            create_scene(Menu_L);
-        }
-    }else{
-        if (key_state[ALLEGRO_KEY_ENTER])
-        {
-            self->scene_end = true;
-            window=1;
-        }
-        else if (key_state[ALLEGRO_KEY_SPACE])
+    if(window2==0){
+        if (key_state[ALLEGRO_KEY_B])
         {
             window2++;
             create_scene(Menu_L);
         }
     }
+    if(window2==1){
+        if (key_state[ALLEGRO_KEY_U])
+        {
+            window2++;
+            create_scene(Menu_L);
+        }
+        if (key_state[ALLEGRO_KEY_ENTER])
+        {
+            self->scene_end = true;
+            window=1;
+        }
+    }
+    if(window2==2){
+        if (prev_key_state[ALLEGRO_KEY_L]==0&&key_state[ALLEGRO_KEY_L]==1)
+        {
+            window2++;
+            create_scene(Menu_L);
+            key_state[ALLEGRO_KEY_L]=prev_key_state[ALLEGRO_KEY_L];
+        }
+    }
+    if(window2==3){
+        if (prev_key_state[ALLEGRO_KEY_L]==0&&key_state[ALLEGRO_KEY_L]==1)
+        {
+            window2++;
+            create_scene(Menu_L);
+            key_state[ALLEGRO_KEY_L]=prev_key_state[ALLEGRO_KEY_L];
+        }
+    }
+    if(window2==4){
+        if (key_state[ALLEGRO_KEY_Y])
+        {
+            window2++;
+            create_scene(Menu_L);
+        }
+    }
+    if(window2==5){
+        if (key_state[ALLEGRO_KEY_ENTER])
+        {
+            self->scene_end = true;
+            window=1;
+        }
+    }
+    /*if (prev_key_state[ALLEGRO_KEY_SPACE]==0&&key_state[ALLEGRO_KEY_SPACE]==1)
+        {
+            window2++;
+            create_scene(Menu_L);
+            key_state[ALLEGRO_KEY_SPACE]=prev_key_state[ALLEGRO_KEY_SPACE];
+        }
+    else if(key_state[ALLEGRO_KEY_ENTER])
+    {
+        self->scene_end = true;
+        window=1;
+    }*/
     return;
 }
 void menu_draw(Scene *self)
