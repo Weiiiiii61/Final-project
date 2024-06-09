@@ -28,9 +28,10 @@ Elements *New_Teleport(int label)
 void Teleport_update(Elements *self)
 {
     Teleport *Obj = ((Teleport *)(self->pDerivedObj));
-    if (key_state[ALLEGRO_KEY_W])
+    if (prev_key_state[ALLEGRO_KEY_W]==0&&key_state[ALLEGRO_KEY_W]==1)
     {
         Obj->activate = true;
+        key_state[ALLEGRO_KEY_L]=prev_key_state[ALLEGRO_KEY_L];
     }
     else
     {
@@ -46,12 +47,17 @@ void Teleport_interact(Elements *self, Elements *tar)
         if (chara->x >= Obj->x &&
             chara->x <= Obj->x + Obj->width &&
             Obj->activate)
-        {
+        {   
+            pass=pass+1;
             window = window+1;
+            stage++;
+            state=0;
             _Character_update_position(tar, 0 - chara->x, 0);
             create_scene(GameScene_L);
         }
+        
     }
+
 }
 void Teleport_draw(Elements *self)
 {
