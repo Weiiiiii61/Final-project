@@ -12,19 +12,19 @@ Elements *New_Character2(int label)
 {
     Character2 *pDerivedObj = (Character2 *)malloc(sizeof(Character2));
     Elements *pObj = New_Elements(label);
-    delay=100;
+    delay=720;
     // setting derived object member
     // load character images
-    char state_string[3][10] = {"stop", "move", "attack"};
-    for (int i = 0; i < 3; i++)
+    char state_string[2][10] = {"stop", "attack"};
+    for (int i = 0; i < 2; i++)
     {
         char buffer[50];
-        sprintf(buffer, "assets/image/chara_%s.gif", state_string[i]);
+        sprintf(buffer, "assets/image/boss_%s.gif", state_string[i]);
         pDerivedObj->gif_status[i] = algif_new_gif(buffer, -1);
     }
     // load effective sound
-    ALLEGRO_SAMPLE *sample = al_load_sample("assets/sound/atk_sound.wav");
-    pDerivedObj->atk_Sound = al_create_sample_instance(sample);
+    ALLEGRO_SAMPLE *sample2 = al_load_sample("assets/sound/atk_sound.wav");
+    pDerivedObj->atk_Sound = al_create_sample_instance(sample2);
     al_set_sample_instance_playmode(pDerivedObj->atk_Sound, ALLEGRO_PLAYMODE_ONCE);
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
 
@@ -54,50 +54,122 @@ void Character2_update(Elements *self)
 
     // use the idea of finite state machine to deal with different state
     Character2 *chara = ((Character2 *)(self->pDerivedObj));
-    /*if (chara->state == STOP2)
-    {
-        if (key_state[ALLEGRO_KEY_SPACE])
-        {
-            chara->state = ATK2;
-        }
-    }
-    else if (chara->state == MOVE2)
-    {
-        if (key_state[ALLEGRO_KEY_SPACE])
-        {
-            chara->state = ATK2;
-        }
-    }
-    else if (chara->state == ATK2)
-    {
-        if (chara->gif_status[chara->state]->done)
-        {
-            chara->state = STOP2;
-            chara->new_proj = false;
-        }
-        if (chara->gif_status[ATK2]->display_index == 2 && chara->new_proj == false)
-        {*/
-            
-        Elements *pro;
-        if(delay==100){
+    chara->y=270;
+    Elements *pro;
+    if(stage==0){    
+        if(delay==720){
+            chara->state=ATK2;  
+            chara->dir = false;
             pro = New_Projectile(Projectile_L,
-                                chara->x - 50,
-                                chara->y + 10,
-                                -5);
+                                    chara->x - 50,
+                                    chara->y + 80,
+                                    -5);
             _Register_elements(scene, pro);
-            chara->new_proj = true;
+            chara->new_proj = true; 
+            state++;
+        }
+        if(delay==420){
+            chara->state=ATK2;
+            chara->dir = false;
+            pro = New_Projectile(Projectile_L,
+                            chara->x - 50,
+                            chara->y + 120,
+                            -15);                         
+            _Register_elements(scene, pro);
+            state=0;
+            
+        }
+        if(delay<300){
+            chara->y=1000;
+        }        
+    }
+    if(stage==1){    
+        if(delay==720){
+            chara->state=ATK2;  
+            chara->dir = false;
+            pro = New_Projectile(Projectile_L,
+                                    chara->x - 50,
+                                    chara->y + 40,
+                                    -20);
+            _Register_elements(scene, pro);
+            chara->new_proj = true; 
+            state++;
+        }
+        if(delay==500){
+            chara->state=ATK2;
+            chara->dir = false;
+            pro = New_Projectile(Projectile_L,
+                            chara->x - 50,
+                            chara->y + 180,
+                            -9);                         
+            _Register_elements(scene, pro);
+            state++;
+        }
+        if(delay==270){
+            chara->state=ATK2;  
+            chara->dir = false;
+            pro = New_Projectile(Projectile_L,
+                                    chara->x - 50,
+                                    chara->y + 75,
+                                    -13);
+            _Register_elements(scene, pro);
+            chara->new_proj = true; 
+            state=0;
+        }
+        if(delay<100){
+            chara->y=1000;
+            state=0;;
+        }        
+    }
+    if(stage==2){    
+        if(delay==720){
+            chara->state=ATK2;  
+            chara->dir = false;
+            pro = New_Projectile(Projectile_L,
+                                    chara->x - 50,
+                                    chara->y + 60,
+                                    -10);
+            _Register_elements(scene, pro);
+            chara->new_proj = true; 
+            state++;
+        }
+        if(delay==480){
+            chara->state=ATK2;
+            chara->dir = false;
+            pro = New_Projectile(Projectile_L,
+                            chara->x - 50,
+                            chara->y + 190,
+                            -15);                         
+            _Register_elements(scene, pro);
+            state++;
+        }
+        
+        if(delay==270){
+            chara->state=ATK2;  
+            chara->dir = false;
+            pro = New_Projectile(Projectile_L,
+                                    chara->x - 50,
+                                    chara->y + 130,
+                                    -18);
+            _Register_elements(scene, pro);
+            chara->new_proj = true; 
+            state++;
         }
         if(delay==0){
+            chara->state=ATK2;
+            chara->dir = false;
             pro = New_Projectile(Projectile_L,
-                        chara->x - 50,
-                        chara->y + 60,
-                        -10);                         
+                            chara->x - 50,
+                            chara->y + 175,
+                            -8);                         
             _Register_elements(scene, pro);
-            chara->new_proj = true;
+            state=0;;
         }
-        delay--;
-        //}
-    //}
+        if(delay<-100){
+            chara->y=1000;
+        }        
+    }
+    delay--;
 }
 void Character2_draw(Elements *self)
 {
@@ -108,16 +180,16 @@ void Character2_draw(Elements *self)
     {
         al_draw_bitmap(frame, chara->x, chara->y, ((chara->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
     }
-    if (chara->state == ATK2 && chara->gif_status[chara->state]->display_index == 2)
+    /*if (chara->state == ATK2 && chara->gif_status[chara->state]->display_index == 2)
     {
         al_play_sample_instance(chara->atk_Sound);
-    }
+    }*/
 }
 void Character2_destory(Elements *self)
 {
     Character2 *Obj = ((Character2 *)(self->pDerivedObj));
     al_destroy_sample_instance(Obj->atk_Sound);
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 2; i++)
         algif_destroy_animation(Obj->gif_status[i]);
     free(Obj->hitbox);
     free(Obj);
