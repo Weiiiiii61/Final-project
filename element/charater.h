@@ -15,7 +15,8 @@ typedef enum CharacterType
 {
     STOP = 0,
     MOVE,
-    ATK
+    ATK,
+    DOWN
 } CharacterType;
 typedef struct _Character
 {
@@ -23,8 +24,9 @@ typedef struct _Character
     int width, height;              // the width and height of image
     bool dir;                       // true: face to right, false: face to left
     int state;                      // the state of character
-    ALGIF_ANIMATION *gif_status[3]; // gif for each state. 0: stop, 1: move, 2:attack
-    ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
+    ALGIF_ANIMATION *gif_status[4]; // gif for each state. 0: stop, 1: move, 2:attack
+    ALLEGRO_SAMPLE_INSTANCE *jump_Sound;
+    ALLEGRO_SAMPLE_INSTANCE *squat_Sound;
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
     bool new_proj;
