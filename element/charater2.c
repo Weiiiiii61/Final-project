@@ -56,6 +56,7 @@ void Character2_update(Elements *self)
     Character2 *chara = ((Character2 *)(self->pDerivedObj));
     chara->y=270;
     Elements *pro;
+    
     if(stage==0){    
         if(delay==720){
             chara->state=ATK2;  
@@ -65,6 +66,7 @@ void Character2_update(Elements *self)
                                     chara->y + 80,
                                     -5);
             _Register_elements(scene, pro);
+            al_play_sample_instance(chara->atk_Sound);
             chara->new_proj = true; 
             state++;
         }
@@ -76,8 +78,8 @@ void Character2_update(Elements *self)
                             chara->y + 120,
                             -15);                         
             _Register_elements(scene, pro);
+            al_play_sample_instance(chara->atk_Sound);
             state=0;
-            
         }
         if(delay<300){
             chara->y=1000;
@@ -92,6 +94,7 @@ void Character2_update(Elements *self)
                                     chara->y + 40,
                                     -20);
             _Register_elements(scene, pro);
+            al_play_sample_instance(chara->atk_Sound);
             chara->new_proj = true; 
             state++;
         }
@@ -103,6 +106,7 @@ void Character2_update(Elements *self)
                             chara->y + 180,
                             -9);                         
             _Register_elements(scene, pro);
+            al_play_sample_instance(chara->atk_Sound);
             state++;
         }
         if(delay==270){
@@ -113,6 +117,7 @@ void Character2_update(Elements *self)
                                     chara->y + 75,
                                     -13);
             _Register_elements(scene, pro);
+            al_play_sample_instance(chara->atk_Sound);
             chara->new_proj = true; 
             state=0;
         }
@@ -130,6 +135,7 @@ void Character2_update(Elements *self)
                                     chara->y + 60,
                                     -10);
             _Register_elements(scene, pro);
+            al_play_sample_instance(chara->atk_Sound);
             chara->new_proj = true; 
             state++;
         }
@@ -141,6 +147,7 @@ void Character2_update(Elements *self)
                             chara->y + 190,
                             -15);                         
             _Register_elements(scene, pro);
+            al_play_sample_instance(chara->atk_Sound);
             state++;
         }
         
@@ -152,6 +159,7 @@ void Character2_update(Elements *self)
                                     chara->y + 130,
                                     -18);
             _Register_elements(scene, pro);
+            al_play_sample_instance(chara->atk_Sound);
             chara->new_proj = true; 
             state++;
         }
@@ -163,7 +171,8 @@ void Character2_update(Elements *self)
                             chara->y + 175,
                             -8);                         
             _Register_elements(scene, pro);
-            state=0;;
+            al_play_sample_instance(chara->atk_Sound);
+            state=0;
         }
         if(delay<-100){
             chara->y=1000;
@@ -180,7 +189,7 @@ void Character2_draw(Elements *self)
     {
         al_draw_bitmap(frame, chara->x, chara->y, ((chara->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
     }
-    /*if (chara->state == ATK2 && chara->gif_status[chara->state]->display_index == 2)
+    /*if (chara->state == ATK2 )
     {
         al_play_sample_instance(chara->atk_Sound);
     }*/
