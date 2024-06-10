@@ -75,12 +75,17 @@ Scene *New_Menu(int label)
     pDerivedObj->song = al_load_sample("assets/sound/bgm2.mp3");
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->song);
+    pDerivedObj->song2 = al_load_sample("assets/sound/drop.mp3");
+    al_reserve_samples(20);
+    pDerivedObj->sample_instance2 = al_create_sample_instance(pDerivedObj->song2);
     pDerivedObj->title_x = WIDTH / 2;
     pDerivedObj->title_y = HEIGHT / 2;
     // Loop the song until the display closes
     (pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
+    (pDerivedObj->sample_instance2, ALLEGRO_PLAYMODE_ONCE);
     al_restore_default_mixer();
     al_attach_sample_instance_to_mixer(pDerivedObj->sample_instance, al_get_default_mixer());
+    al_attach_sample_instance_to_mixer(pDerivedObj->sample_instance2, al_get_default_mixer());
     // set the volume of instance
     al_set_sample_instance_gain(pDerivedObj->sample_instance, 0.1);
     pObj->pDerivedObj = pDerivedObj;
@@ -91,7 +96,8 @@ Scene *New_Menu(int label)
     return pObj;
 }
 void menu_update(Scene *self)
-{  
+{
+    Menu *Obj = ((Menu *)(self->pDerivedObj));  
     if(window2==0){
         if (key_state[ALLEGRO_KEY_B])
         {
@@ -131,6 +137,7 @@ void menu_update(Scene *self)
             window2++;
             create_scene(Menu_L);
             key_state[ALLEGRO_KEY_L]=prev_key_state[ALLEGRO_KEY_L];
+            al_play_sample_instance(Obj->sample_instance2);
         }
     }
     if(window2==4){
