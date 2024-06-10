@@ -1,189 +1,42 @@
-#include "projectile.h"
-#include "../shapes/Circle.h"
+#include "tree.h"
+#include "../shapes/Rectangle.h"
 /*
-   [Projectile function]
+   [tree function]
 */
-Elements *New_Projectile(int label, int x, int y, int v)
+Elements *New_Tree(int label)
 {
-    Projectile *pDerivedObj = (Projectile *)malloc(sizeof(Projectile));#include "projectile.h"
-#include "../shapes/Circle.h"
-/*
-   [Projectile function]
-*/
-Elements *New_Projectile(int label, int x, int y, int v)
-{
-    Projectile *pDerivedObj = (Projectile *)malloc(sizeof(Projectile));
+    Tree *pDerivedObj = (Tree *)malloc(sizeof(Tree));
     Elements *pObj = New_Elements(label);
     // setting derived object member
-    if(stage==0&&state==0){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile.png");
-    }
-    else if(stage==0&&state==1){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile2.png");
-    }
-    else if(stage==1&&state==0){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile1.png");
-    }
-    else if(stage==1&&state==1){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile3.png");
-    }
-    else if(stage==1&&state==2){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile4.png");
-    }
-    else if(stage==2&&state==0){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile5.png");
-    }
-    else if(stage==2&&state==1){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile6.png");
-    }
-    else if(stage==2&&state==2){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile7.png");
-    }
-    else if(stage==2&&state==3){
-        pDerivedObj->img = al_load_bitmap("assets/image/projectile8.png");
-    }
+    pDerivedObj->img = al_load_bitmap("assets/image/tree.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
-    pDerivedObj->x = x;
-    pDerivedObj->y = y;
-    pDerivedObj->v = v;
-    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2,
-                                     pDerivedObj->y + pDerivedObj->height / 2,
-                                     min(pDerivedObj->width, pDerivedObj->height) / 2);
-    // setting the interact object
-    pObj->inter_obj[pObj->inter_len++] = Character_L;
-    pObj->inter_obj[pObj->inter_len++] = Floor_L;
+    pDerivedObj->x = 85;
+    pDerivedObj->y = HEIGHT - pDerivedObj->height;
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x + pDerivedObj->width / 3,
+                                        pDerivedObj->y + pDerivedObj->height / 3,
+                                        pDerivedObj->x + 2 * pDerivedObj->width / 3,
+                                        pDerivedObj->y + 2 * pDerivedObj->height / 3);
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
-    pObj->Update = Projectile_update;
-    pObj->Interact = Projectile_interact;
-    pObj->Draw = Projectile_draw;
-    pObj->Destroy = Projectile_destory;
-
+    pObj->Update = Tree_update;
+    pObj->Interact = Tree_interact;
+    pObj->Draw = Tree_draw;
+    pObj->Destroy = Tree_destory;
     return pObj;
 }
-void Projectile_update(Elements *self)
+void Tree_update(Elements *self) {}
+void Tree_interact(Elements *self, Elements *tar) {}
+void Tree_draw(Elements *self)
 {
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    _Projectile_update_position(self, Obj->v, 0);
+    /*Tree *Obj = ((Tree *)(self->pDerivedObj));
+    al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);*/
 }
-void _Projectile_update_position(Elements *self, int dx, int dy)
+void Tree_destory(Elements *self)
 {
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    Obj->x += dx;
-    Obj->y += dy;
-    Shape *hitbox = Obj->hitbox;
-    hitbox->update_center_x(hitbox, dx);
-    hitbox->update_center_y(hitbox, dy);
-}
-void Projectile_interact(Elements *self, Elements *tar)
-{
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    if (tar->label == Floor_L)
-    {
-        if (Obj->x < 0 - Obj->width)
-            self->dele = true;
-        else if (Obj->x > WIDTH + Obj->width)
-            self->dele = true;
-    }
-    else if (tar->label == Character_L)
-    {
-        Character *tree = ((Character *)(tar->pDerivedObj));
-        if (tree->hitbox->overlap(tree->hitbox, Obj->hitbox))
-        {
-            stage=0;
-            state=0;
-            self->dele = true;
-            window2=6;
-        }
-    }
-}
-void Projectile_draw(Elements *self)
-{
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    if (Obj->v > 0)
-        al_draw_bitmap(Obj->img, Obj->x, Obj->y, ALLEGRO_FLIP_HORIZONTAL);
-    else
-        al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);
-}
-void Projectile_destory(Elements *self)
-{
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+    /*Tree *Obj = ((Tree *)(self->pDerivedObj));
     al_destroy_bitmap(Obj->img);
     free(Obj->hitbox);
     free(Obj);
-    free(self);
-}
-
-    Elements *pObj = New_Elements(label);
-    // setting derived object member
-    pDerivedObj->img = al_load_bitmap("assets/image/projectile.png");
-    pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
-    pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
-    pDerivedObj->x = x;
-    pDerivedObj->y = y;
-    pDerivedObj->v = v;
-    pDerivedObj->hitbox = New_Circle(pDerivedObj->x + pDerivedObj->width / 2,
-                                     pDerivedObj->y + pDerivedObj->height / 2,
-                                     min(pDerivedObj->width, pDerivedObj->height) / 2);
-    // setting the interact object
-    pObj->inter_obj[pObj->inter_len++] = Character_L;
-    pObj->inter_obj[pObj->inter_len++] = Floor_L;
-    // setting derived object function
-    pObj->pDerivedObj = pDerivedObj;
-    pObj->Update = Projectile_update;
-    pObj->Interact = Projectile_interact;
-    pObj->Draw = Projectile_draw;
-    pObj->Destroy = Projectile_destory;
-
-    return pObj;
-}
-void Projectile_update(Elements *self)
-{
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    _Projectile_update_position(self, Obj->v, 0);
-}
-void _Projectile_update_position(Elements *self, int dx, int dy)
-{
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    Obj->x += dx;
-    Obj->y += dy;
-    Shape *hitbox = Obj->hitbox;
-    hitbox->update_center_x(hitbox, dx);
-    hitbox->update_center_y(hitbox, dy);
-}
-void Projectile_interact(Elements *self, Elements *tar)
-{
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    if (tar->label == Floor_L)
-    {
-        if (Obj->x < 0 - Obj->width)
-            self->dele = true;
-        else if (Obj->x > WIDTH + Obj->width)
-            self->dele = true;
-    }
-    else if (tar->label == Character_L)
-    {
-        Character *tree = ((Character *)(tar->pDerivedObj));
-        if (tree->hitbox->overlap(tree->hitbox, Obj->hitbox))
-        {
-            self->dele = true;
-        }
-    }
-}
-void Projectile_draw(Elements *self)
-{
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    if (Obj->v > 0)
-        al_draw_bitmap(Obj->img, Obj->x, Obj->y, ALLEGRO_FLIP_HORIZONTAL);
-    else
-        al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);
-}
-void Projectile_destory(Elements *self)
-{
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    al_destroy_bitmap(Obj->img);
-    free(Obj->hitbox);
-    free(Obj);
-    free(self);
+    free(self);*/
 }
