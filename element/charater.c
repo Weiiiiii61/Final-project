@@ -75,7 +75,7 @@ void Character_update(Elements *self)
         else if (key_state[ALLEGRO_KEY_SPACE])
         {
             chara->state = MOVE;
-            //al_load_sample("assets/sound/jump.mp3");
+            al_play_sample_instance(chara->jump_Sound);
             a=1;
         }
         else if (key_state[ALLEGRO_KEY_D])
@@ -86,7 +86,7 @@ void Character_update(Elements *self)
         else if (key_state[ALLEGRO_KEY_LCTRL]||key_state[ALLEGRO_KEY_RCTRL])
         {
             chara->y=380;
-            //al_load_sample("assets/sound/squat.mp3");
+            al_play_sample_instance(chara->squat_Sound);
             hitbox->update_center_y(hitbox, 70);
             chara->state = DOWN;
         }
@@ -108,13 +108,13 @@ void Character_update(Elements *self)
         else if (key_state[ALLEGRO_KEY_LCTRL]||key_state[ALLEGRO_KEY_RCTRL])
         {
             chara->y=380;
-            //al_load_sample("assets/sound/squat.mp3");
+            al_play_sample_instance(chara->squat_Sound);
             hitbox->update_center_y(hitbox, 70);
             chara->state = DOWN;
         }
         else if (prev_key_state[ALLEGRO_KEY_SPACE]==0&&key_state[ALLEGRO_KEY_SPACE]==1)
         {
-            //al_load_sample("assets/sound/jump.mp3");
+            al_play_sample_instance(chara->jump_Sound);
             a=1;
             key_state[ALLEGRO_KEY_SPACE]=prev_key_state[ALLEGRO_KEY_SPACE];
         }
@@ -147,14 +147,14 @@ void Character_update(Elements *self)
             chara->dir = false;
             chara->state = MOVE;
         }
-        if (key_state[ALLEGRO_KEY_SPACE])
+        /*if (key_state[ALLEGRO_KEY_SPACE])
         {
             chara->y=310;
-            //al_load_sample("assets/sound/jump.mp3");
+            al_play_sample_instance(chara->atk_Sound);
             hitbox->update_center_y(hitbox, -70);
             chara->state = MOVE;
             a=1;
-        }
+        }*/
         if(chara->y<=310){
             _Character_update_position(self, 0, 7);
             chara->state = MOVE;
@@ -187,14 +187,14 @@ void Character_draw(Elements *self)
     {
         al_draw_bitmap(frame, chara->x, chara->y, ((chara->dir) ? ALLEGRO_FLIP_HORIZONTAL : 0));
     }
-    if (prev_key_state[ALLEGRO_KEY_SPACE]==0&&key_state[ALLEGRO_KEY_SPACE]==1)
+    /*if (prev_key_state[ALLEGRO_KEY_SPACE]==0&&key_state[ALLEGRO_KEY_SPACE]==1)
     {
         al_play_sample_instance(chara->jump_Sound);
     }
     else if (chara->state == DOWN && chara->gif_status[chara->state]->display_index == 2)
     {
         al_play_sample_instance(chara->squat_Sound);
-    }
+    }*/
 }
 void Character_destory(Elements *self)
 {
