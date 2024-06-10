@@ -11,7 +11,7 @@ Elements *New_Tree(int label)
     pDerivedObj->img = al_load_bitmap("assets/image/tree.png");
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
-    pDerivedObj->x = WIDTH - pDerivedObj->width;
+    pDerivedObj->x = 85;
     pDerivedObj->y = HEIGHT - pDerivedObj->height;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x + pDerivedObj->width / 3,
                                         pDerivedObj->y + pDerivedObj->height / 3,
@@ -29,14 +29,14 @@ void Tree_update(Elements *self) {}
 void Tree_interact(Elements *self, Elements *tar) {}
 void Tree_draw(Elements *self)
 {
-    Tree *Obj = ((Tree *)(self->pDerivedObj));
-    al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);
+    /*Tree *Obj = ((Tree *)(self->pDerivedObj));
+    al_draw_bitmap(Obj->img, Obj->x, Obj->y, 0);*/
 }
 void Tree_destory(Elements *self)
 {
-    Tree *Obj = ((Tree *)(self->pDerivedObj));
+    /*Tree *Obj = ((Tree *)(self->pDerivedObj));
     al_destroy_bitmap(Obj->img);
     free(Obj->hitbox);
     free(Obj);
-    free(self);
+    free(self);*/
 }
